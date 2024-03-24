@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
-import 'package:tiktok_clone/features/authentication/log_in_screen.dart';
 import 'package:tiktok_clone/features/authentication/user_name_screen.dart';
+import 'package:tiktok_clone/features/authentication/log_in_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_buttons.dart';
 
 import '../../constants/sizes.dart';
@@ -10,12 +10,12 @@ import '../../constants/sizes.dart';
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
-  void onLogInTap(BuildContext context) {
+  void _onLogInTap(BuildContext context) {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (_) => const LogInScreen()));
   }
 
-  void onUserTap(BuildContext context) {
+  void _onEmailTap(BuildContext context) {
     Navigator.of(context)
         .push(MaterialPageRoute(builder: (_) => const UserNameScreen()));
   }
@@ -45,12 +45,12 @@ class SignUpScreen extends StatelessWidget {
               ),
               Gaps.v40,
               AuthButton(
-                  onTapFunction: () => onUserTap(context),
+                  onTapFunction: () => _onEmailTap(context),
                   icon: const FaIcon(FontAwesomeIcons.user),
                   text: "Use phone / email / username"),
               Gaps.v14,
               AuthButton(
-                  onTapFunction: () => onUserTap(context),
+                  onTapFunction: () {},
                   icon: const FaIcon(FontAwesomeIcons.apple),
                   text: "Continue with Apple"),
             ],
@@ -59,14 +59,14 @@ class SignUpScreen extends StatelessWidget {
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 2,
-        color: Colors.grey.shade100,
+        color: Colors.grey.shade50,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: Sizes.size32),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             const Text('Already have an account?'),
             Gaps.h5,
             GestureDetector(
-              onTap: () => onLogInTap(context),
+              onTap: () => _onLogInTap(context),
               child: Text(
                 'Log in',
                 style: TextStyle(
