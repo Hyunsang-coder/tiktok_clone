@@ -1,55 +1,70 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/features/authentication/email_screen.dart';
+import 'package:tiktok_clone/features/authentication/password_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 
 import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
 
-class UserNameScreen extends StatefulWidget {
-  const UserNameScreen({super.key});
+class EmailScreen extends StatefulWidget {
+  const EmailScreen({super.key});
 
   @override
-  State<UserNameScreen> createState() => _UserNameScreenState();
+  State<EmailScreen> createState() => _EmailScreenState();
 }
 
-class _UserNameScreenState extends State<UserNameScreen> {
-  final TextEditingController _usernameController = TextEditingController();
+class _EmailScreenState extends State<EmailScreen> {
+  final TextEditingController _useremailController = TextEditingController();
 
-  String _userName = "";
+  String _userEmail = "";
 
   @override
   void initState() {
     super.initState();
 
-    _usernameController.addListener(() {
+    _useremailController.addListener(() {
       setState(() {
-        _userName = _usernameController.text;
+        _userEmail = _useremailController.text;
       });
     });
   }
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _useremailController.dispose();
 
     super.dispose();
   }
 
-  void _onNextTap() {
-    if (_userName.isEmpty) return;
+  String? _isEmailValid() {
+    if (_userEmail.isEmpty) {
+      return null;
+    }
+    // 정규식을 이용해서 email 양식 확인
+    final regExp = RegExp(
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    if (!regExp.hasMatch(_userEmail)) {
+      return "Email not valid";
+    }
 
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: (_) => const EmailScreen()));
+    return null;
   }
 
-  void onScaffoldTap() {
+  void _onScaffoldTap() {
     FocusScope.of(context).unfocus();
+  }
+
+  void _onSubmit() {
+    if (_userEmail.isEmpty || _isEmailValid() != null) {
+      return;
+    }
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => const PasswordScreen()));
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onScaffoldTap,
+      onTap: _onScaffoldTap,
       child: Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -63,26 +78,21 @@ class _UserNameScreenState extends State<UserNameScreen> {
             children: [
               Gaps.v40,
               const Text(
-                'Create username',
+                'What is your email?',
                 style: TextStyle(
                   fontSize: Sizes.size24,
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              Gaps.v8,
-              const Text(
-                'You can always change this later',
-                style: TextStyle(
-                  fontSize: Sizes.size16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black54,
-                ),
-              ),
               Gaps.v16,
               TextField(
-                controller: _usernameController,
+                controller: _useremailController,
+                keyboardType: TextInputType.emailAddress,
+                autocorrect: false,
+                onEditingComplete: _onSubmit,
                 decoration: InputDecoration(
-                  hintText: "User name",
+                  hintText: "Email",
+                  errorText: _isEmailValid(),
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
                       color: Colors.grey.shade400,
@@ -98,8 +108,9 @@ class _UserNameScreenState extends State<UserNameScreen> {
               ),
               Gaps.v16,
               GestureDetector(
-                onTap: _onNextTap,
-                child: FormButton(isDisabled: _userName.isEmpty),
+                onTap: _onSubmit,
+                child: FormButton(
+                    isDisabled: _userEmail.isEmpty || _isEmailValid() != null),
               ),
             ],
           ),
