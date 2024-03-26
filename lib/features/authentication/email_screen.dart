@@ -4,6 +4,7 @@ import 'package:tiktok_clone/features/authentication/widgets/form_button.dart';
 
 import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
+import '../../constants/utils.dart';
 
 class EmailScreen extends StatefulWidget {
   const EmailScreen({super.key});
@@ -40,11 +41,8 @@ class _EmailScreenState extends State<EmailScreen> {
       return null;
     }
     // 정규식을 이용해서 email 양식 확인
-    final regExp = RegExp(
-        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    if (!regExp.hasMatch(_userEmail)) {
-      return "Email not valid";
-    }
+    Utils.validateEmailForm(
+        input: _userEmail, resultMessage: "Email is not valid");
 
     return null;
   }
@@ -110,7 +108,9 @@ class _EmailScreenState extends State<EmailScreen> {
               GestureDetector(
                 onTap: _onSubmit,
                 child: FormButton(
-                    isDisabled: _userEmail.isEmpty || _isEmailValid() != null),
+                  isDisabled: _userEmail.isEmpty || _isEmailValid() != null,
+                  text: "Next",
+                ),
               ),
             ],
           ),

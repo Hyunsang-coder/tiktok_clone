@@ -4,10 +4,12 @@ import '../../../constants/sizes.dart';
 
 class FormButton extends StatelessWidget {
   final bool isDisabled;
+  final String text;
 
   const FormButton({
     super.key,
     required this.isDisabled,
+    required this.text,
   });
 
   @override
@@ -28,8 +30,8 @@ class FormButton extends StatelessWidget {
           style: TextStyle(
               color: isDisabled ? Colors.grey.shade400 : Colors.white,
               fontWeight: FontWeight.w600),
-          child: const Text(
-            'Next',
+          child: Text(
+            text,
             textAlign: TextAlign.center,
           ),
         ),

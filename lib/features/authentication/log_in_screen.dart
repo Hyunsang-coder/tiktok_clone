@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
-import 'package:tiktok_clone/features/authentication/user_name_screen.dart';
 import 'package:tiktok_clone/features/authentication/widgets/auth_buttons.dart';
+import 'package:tiktok_clone/features/authentication/widgets/login_form.dart';
 
 import '../../constants/sizes.dart';
 
@@ -15,7 +15,7 @@ class LogInScreen extends StatelessWidget {
 
   void onUserTap(BuildContext context) {
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: (_) => const UserNameScreen()));
+        .push(MaterialPageRoute(builder: (_) => const LoginForm()));
   }
 
   @override
