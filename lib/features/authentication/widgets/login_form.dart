@@ -3,6 +3,7 @@ import 'package:tiktok_clone/constants/gaps.dart';
 
 import '../../../constants/sizes.dart';
 import '../../../constants/utils.dart';
+import '../../onboarding/interest_screen.dart';
 import 'form_button.dart';
 
 class LoginForm extends StatefulWidget {
@@ -17,18 +18,15 @@ class _LoginFormState extends State<LoginForm> {
   Map<String, String> formData = {};
 
   _onSubmit() {
-    if (_formKey.currentState == null) {
-      //print("current state is null");
-      return;
-    }
+    if (_formKey.currentState != null) {
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
 
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      // ignore: avoid_print
-      print("Email: ${formData['email']}");
-      // ignore: avoid_print
-      print("Password: ${formData['password']}");
+        MaterialPageRoute(builder: (context) => const InterestScreen());
+      }
     }
+    // ignore: avoid_print
+    print(formData);
   }
 
   @override
@@ -66,6 +64,7 @@ class _LoginFormState extends State<LoginForm> {
               ),
               Gaps.v16,
               TextFormField(
+                obscureText: true,
                 decoration: InputDecoration(
                     hintText: "Password",
                     enabledBorder: UnderlineInputBorder(
@@ -74,7 +73,7 @@ class _LoginFormState extends State<LoginForm> {
                     ))),
                 validator: (String? value) {
                   if (value == null || value.isEmpty) {
-                    return "Enter your password.";
+                    return "Wrong password.";
                   }
                   return null;
                 },

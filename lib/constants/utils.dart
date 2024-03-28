@@ -7,6 +7,8 @@ class Utils {
 
     if (!regExp.hasMatch(input)) {
       return resultMessage;
+    } else {
+      return null;
     }
   }
 }
