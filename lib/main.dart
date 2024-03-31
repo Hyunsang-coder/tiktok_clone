@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tiktok_clone/features/onboarding/interest_screen.dart';
+import 'package:tiktok_clone/features/navigation/main_navigation.dart';
 
 import 'constants/sizes.dart';
 
@@ -28,7 +28,7 @@ class TickTokApp extends StatelessWidget {
                 fontWeight: FontWeight.w600,
                 color: Colors.black)),
       ),
-      home: const InterestScreen(),
+      home: const MainNavigationScreen(),
     );
   }
 }

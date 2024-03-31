@@ -22,7 +22,10 @@ class _LoginFormState extends State<LoginForm> {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
 
-        MaterialPageRoute(builder: (context) => const InterestScreen());
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (_) => const InterestScreen()), (route) {
+          return false;
+        });
       }
     }
     // ignore: avoid_print

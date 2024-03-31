@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/features/navigation/main_navigation.dart';
 
 import '../../constants/gaps.dart';
 import '../../constants/sizes.dart';
@@ -38,6 +39,14 @@ class _TutorialScreenState extends State<TutorialScreen> {
       _page = Page.first;
     }
     setState(() {});
+  }
+
+  void _onStartAppTab() {
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (_) => const MainNavigationScreen()),
+        (route) {
+      return false;
+    });
   }
 
   @override
@@ -103,7 +112,7 @@ class _TutorialScreenState extends State<TutorialScreen> {
               duration: const Duration(milliseconds: 300),
               opacity: _page == Page.second ? 1 : 0,
               child: CupertinoButton(
-                onPressed: () {},
+                onPressed: _onStartAppTab,
                 color: Theme.of(context).primaryColor,
                 child: const Text(
                   'Start the App',

@@ -30,7 +30,7 @@ class SignUpScreen extends StatelessWidget {
             children: [
               Gaps.v80,
               const Text(
-                "Sing up for TickTok",
+                "Sign up for TickTok",
                 style: TextStyle(
                     fontSize: Sizes.size24, fontWeight: FontWeight.w700),
               ),
