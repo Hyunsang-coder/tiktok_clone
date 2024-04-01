@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../constants/gaps.dart';
+import '../../../constants/sizes.dart';
 
 class NavTab extends StatelessWidget {
   const NavTab({
@@ -35,12 +36,14 @@ class NavTab extends StatelessWidget {
                 FaIcon(
                   isSelected ? selectedIcon : icon,
                   color: Colors.white,
+                  size: Sizes.size18,
                 ),
                 Gaps.v5,
                 Text(
                   text,
                   style: const TextStyle(
                     color: Colors.white,
+                    fontSize: Sizes.size14,
                   ),
                 )
               ],
