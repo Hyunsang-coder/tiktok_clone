@@ -11,6 +11,7 @@ class VideoTimelineScreen extends StatefulWidget {
 
 class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
   int _itemCount = 4;
+  final PageController _controller = PageController();
 
   List<Color> colors = [
     Colors.amber,
@@ -20,7 +21,9 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
   ];
 
   void _onPageChanged(int page) {
-    print('OnPageChanged: $page');
+    _controller.animateToPage(page,
+        duration: const Duration(milliseconds: 150), curve: Curves.linear);
+    //print('OnPageChanged: $page');
     if (page == _itemCount - 1) {
       _itemCount = _itemCount + 4;
       colors.addAll([
@@ -37,6 +40,7 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
   Widget build(BuildContext context) {
     return PageView.builder(
       scrollDirection: Axis.vertical,
+      controller: _controller,
       onPageChanged: _onPageChanged,
       itemCount: _itemCount,
       itemBuilder: (context, index) => Container(

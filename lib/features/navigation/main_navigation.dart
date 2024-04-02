@@ -48,7 +48,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   @override
   void initState() {
     super.initState();
-    _selectedIndex = 1;
+    _selectedIndex = 0;
   }
 
   void _onTap(int index) {
