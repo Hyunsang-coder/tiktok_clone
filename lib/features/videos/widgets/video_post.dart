@@ -41,11 +41,7 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _initVideoPlayer();
-
+  void _initAnimationController() {
     _animationController = AnimationController(
       vsync: this,
       lowerBound: 1.0,
@@ -53,11 +49,23 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
       value: 1.5,
       duration: _animationDuration,
     );
+
+    _animationController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initVideoPlayer();
+    _initAnimationController();
   }
 
   @override
   void dispose() {
     _videoController.dispose();
+    _animationController.dispose();
     super.dispose();
   }
 
