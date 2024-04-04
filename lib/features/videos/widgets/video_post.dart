@@ -17,8 +17,7 @@ class VideoPost extends StatefulWidget {
 }
 
 class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
-  final VideoPlayerController _videoController =
-      VideoPlayerController.asset('assets/videos/subway.mp4');
+  late final VideoPlayerController _videoController;
 
   late final AnimationController _animationController;
 
@@ -27,7 +26,9 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
   final Duration _animationDuration = const Duration(milliseconds: 200);
 
   _initVideoPlayer() async {
+    _videoController = VideoPlayerController.asset('assets/videos/subway.mp4');
     await _videoController.initialize();
+    await _videoController.setLooping(true);
 
     setState(() {
       _videoController.addListener(_onVideoEnded);
@@ -49,10 +50,6 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
       value: 1.5,
       duration: _animationDuration,
     );
-
-    _animationController.addListener(() {
-      setState(() {});
-    });
   }
 
   @override
@@ -108,16 +105,23 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
               child: GestureDetector(
             onTap: _onTogglePause,
           )),
-          Transform.scale(
-            scale: _animationController.value,
+          AnimatedBuilder(
+            animation: _animationController,
+            builder: (context, child) {
+              return Transform.scale(
+                scale: _animationController.value,
+                child: child,
+              );
+            },
             child: AnimatedOpacity(
               opacity: isPaused ? 1 : 0,
               duration: _animationDuration,
               child: const Center(
-                  child: IgnorePointer(
-                child: Icon(FontAwesomeIcons.play,
-                    size: Sizes.size52, color: Colors.white),
-              )),
+                child: IgnorePointer(
+                  child: Icon(FontAwesomeIcons.play,
+                      size: Sizes.size52, color: Colors.white),
+                ),
+              ),
             ),
           )
         ],
