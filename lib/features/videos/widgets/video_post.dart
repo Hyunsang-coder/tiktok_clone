@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
+import '../../../constants/gaps.dart';
 import '../../../constants/sizes.dart';
 
 class VideoPost extends StatefulWidget {
@@ -24,6 +26,7 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
   bool isPaused = false;
 
   final Duration _animationDuration = const Duration(milliseconds: 200);
+  bool seeMore = false;
 
   _initVideoPlayer() async {
     _videoController = VideoPlayerController.asset('assets/videos/subway.mp4');
@@ -105,25 +108,107 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
               child: GestureDetector(
             onTap: _onTogglePause,
           )),
-          AnimatedBuilder(
-            animation: _animationController,
-            builder: (context, child) {
-              return Transform.scale(
-                scale: _animationController.value,
-                child: child,
-              );
-            },
-            child: AnimatedOpacity(
-              opacity: isPaused ? 1 : 0,
-              duration: _animationDuration,
-              child: const Center(
-                child: IgnorePointer(
-                  child: Icon(FontAwesomeIcons.play,
-                      size: Sizes.size52, color: Colors.white),
+          Positioned.fill(
+            child: IgnorePointer(
+              child: Center(
+                child: AnimatedBuilder(
+                  animation: _animationController,
+                  builder: (context, child) {
+                    return Transform.scale(
+                      scale: _animationController.value,
+                      child: child,
+                    );
+                  },
+                  child: AnimatedOpacity(
+                    opacity: isPaused ? 1 : 0,
+                    duration: _animationDuration,
+                    child: const Icon(FontAwesomeIcons.play,
+                        size: Sizes.size52, color: Colors.white),
+                  ),
                 ),
               ),
             ),
-          )
+          ),
+          Positioned(
+            bottom: 20,
+            left: 10,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "@현상",
+                  style: TextStyle(
+                    fontSize: Sizes.size16,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Gaps.v10,
+                Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 2,
+                      child: Text(
+                        "Scene from the subway to work:) Isn't it beautiful?",
+                        overflow: seeMore
+                            ? TextOverflow.visible
+                            : TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: Sizes.size14,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    if (!seeMore)
+                      TextButton(
+                        onPressed: () {
+                          seeMore = !seeMore;
+                          setState(() {});
+                        },
+                        child: const Text("See more",
+                            style: TextStyle(
+                              fontSize: Sizes.size14,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            )),
+                      ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          const Positioned(
+            bottom: 20,
+            right: 10,
+            child: Column(
+              children: [
+                CircleAvatar(
+                  radius: 25,
+                  backgroundColor: Colors.black,
+                  foregroundColor: Colors.white,
+                  foregroundImage: NetworkImage(
+                    "https://avatars.githubusercontent.com/u/3612017",
+                  ),
+                  child: Text("니꼬"),
+                ),
+                Gaps.v24,
+                VideoButton(
+                  icon: FontAwesomeIcons.solidHeart,
+                  text: "2.9M",
+                ),
+                Gaps.v24,
+                VideoButton(
+                  icon: FontAwesomeIcons.solidComment,
+                  text: "33K",
+                ),
+                Gaps.v24,
+                VideoButton(
+                  icon: FontAwesomeIcons.share,
+                  text: "Share",
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );
