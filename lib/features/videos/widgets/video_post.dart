@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
+import 'package:tiktok_clone/features/videos/widgets/video_comments.dart';
 import 'package:video_player/video_player.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
@@ -70,9 +71,14 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
-    //print("Screen ${widget.index} ==> ${info.visibleFraction}");
-    if (info.visibleFraction == 1 && !_videoController.value.isPlaying) {
+    if (info.visibleFraction == 1 &&
+        !isPaused &&
+        !_videoController.value.isPlaying) {
       _videoController.play();
+    }
+
+    if (_videoController.value.isPlaying && info.visibleFraction == 0) {
+      _onTogglePause();
     }
   }
 
@@ -88,6 +94,19 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
     setState(() {
       isPaused = !isPaused;
     });
+  }
+
+  void _onTapComments(BuildContext context) async {
+    if (_videoController.value.isPlaying) {
+      _onTogglePause();
+    }
+    await showModalBottomSheet(
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        context: context,
+        builder: (context) => const VideoComments());
+
+    _onTogglePause();
   }
 
   @override
@@ -177,32 +196,35 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
               ],
             ),
           ),
-          const Positioned(
+          Positioned(
             bottom: 20,
             right: 10,
             child: Column(
               children: [
-                CircleAvatar(
+                const CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.black,
                   foregroundColor: Colors.white,
-                  foregroundImage: NetworkImage(
-                    "https://avatars.githubusercontent.com/u/3612017",
-                  ),
+                  // foregroundImage: NetworkImage(
+                  //   "https://avatars.githubusercontent.com/u/3612017",
+                  // ),
                   child: Text("니꼬"),
                 ),
                 Gaps.v24,
-                VideoButton(
+                const VideoButton(
                   icon: FontAwesomeIcons.solidHeart,
                   text: "2.9M",
                 ),
                 Gaps.v24,
-                VideoButton(
-                  icon: FontAwesomeIcons.solidComment,
-                  text: "33K",
+                GestureDetector(
+                  onTap: () => _onTapComments(context),
+                  child: const VideoButton(
+                    icon: FontAwesomeIcons.solidComment,
+                    text: "33K",
+                  ),
                 ),
                 Gaps.v24,
-                VideoButton(
+                const VideoButton(
                   icon: FontAwesomeIcons.share,
                   text: "Share",
                 )
