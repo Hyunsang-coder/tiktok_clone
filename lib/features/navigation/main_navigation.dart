@@ -4,6 +4,7 @@ import 'package:tiktok_clone/features/discover/discover_screen.dart';
 import 'package:tiktok_clone/features/inbox/inbox_screen.dart';
 import 'package:tiktok_clone/features/navigation/widgets/nav_tab.dart';
 import 'package:tiktok_clone/features/navigation/widgets/post_video_button.dart';
+import 'package:tiktok_clone/features/user/user_profile.dart';
 import 'package:tiktok_clone/features/videos/video_timeline_screen.dart';
 
 import '../../constants/gaps.dart';
@@ -17,7 +18,7 @@ class MainNavigationScreen extends StatefulWidget {
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _selectedIndex = 3;
+  int _selectedIndex = 4;
 
   // final screens = [
   //   const Center(child: VideoTimelineScreen()),
@@ -98,7 +99,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
           ),
           Offstage(
             offstage: _selectedIndex != 4,
-            child: Container(),
+            child: const UserProfileScreen(),
           ),
         ],
       ),
