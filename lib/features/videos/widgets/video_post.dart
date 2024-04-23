@@ -71,6 +71,7 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
+    if (!mounted) return;
     if (info.visibleFraction == 1 &&
         !isPaused &&
         !_videoController.value.isPlaying) {
