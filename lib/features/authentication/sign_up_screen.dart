@@ -22,61 +22,71 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: Sizes.size40),
-          child: Column(
-            children: [
-              Gaps.v80,
-              const Text(
-                "Sign up for TickTok",
-                style: TextStyle(
-                    fontSize: Sizes.size24, fontWeight: FontWeight.w700),
-              ),
-              Gaps.v20,
-              const Text(
-                'Create a profile, follow other accounts, make your own videos, and more.',
-                style: TextStyle(
-                  fontSize: Sizes.size14,
-                  color: Colors.black38,
+    return OrientationBuilder(builder: (context, orientation) {
+      /* if (orientation == Orientation.landscape) {
+          return const Scaffold(
+            body: Center(
+              child: Text('Plz rotate ur phone.'),
+            ),
+          );
+        } */
+
+      return Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: Sizes.size40),
+            child: Column(
+              children: [
+                Gaps.v80,
+                const Text(
+                  "Sign up for TickTok",
+                  style: TextStyle(
+                      fontSize: Sizes.size24, fontWeight: FontWeight.w700),
                 ),
-                textAlign: TextAlign.center,
-              ),
-              Gaps.v40,
-              AuthButton(
-                  onTapFunction: () => _onEmailTap(context),
-                  icon: const FaIcon(FontAwesomeIcons.user),
-                  text: "Use phone / email / username"),
-              Gaps.v14,
-              AuthButton(
-                  onTapFunction: () {},
-                  icon: const FaIcon(FontAwesomeIcons.apple),
-                  text: "Continue with Apple"),
-            ],
+                Gaps.v20,
+                const Text(
+                  'Create a profile, follow other accounts, make your own videos, and more.',
+                  style: TextStyle(
+                    fontSize: Sizes.size14,
+                    color: Colors.black38,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                Gaps.v40,
+                AuthButton(
+                    onTapFunction: () => _onEmailTap(context),
+                    icon: const FaIcon(FontAwesomeIcons.user),
+                    text: "Use phone / email / username"),
+                Gaps.v14,
+                AuthButton(
+                    onTapFunction: () {},
+                    icon: const FaIcon(FontAwesomeIcons.apple),
+                    text: "Continue with Apple"),
+              ],
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: BottomAppBar(
-        elevation: 2,
-        color: Colors.grey.shade50,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: Sizes.size32),
-          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            const Text('Already have an account?'),
-            Gaps.h5,
-            GestureDetector(
-              onTap: () => _onLogInTap(context),
-              child: Text(
-                'Log in',
-                style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.w600),
+        bottomNavigationBar: BottomAppBar(
+          elevation: 2,
+          color: Colors.grey.shade50,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: Sizes.size32),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              const Text('Already have an account?'),
+              Gaps.h5,
+              GestureDetector(
+                onTap: () => _onLogInTap(context),
+                child: Text(
+                  'Log in',
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontWeight: FontWeight.w600),
+                ),
               ),
-            ),
-          ]),
+            ]),
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
