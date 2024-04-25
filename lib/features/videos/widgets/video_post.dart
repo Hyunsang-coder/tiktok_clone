@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_button.dart';
@@ -33,6 +34,9 @@ class _VideoPostState extends State<VideoPost> with TickerProviderStateMixin {
     _videoController = VideoPlayerController.asset('assets/videos/subway.mp4');
     await _videoController.initialize();
     await _videoController.setLooping(true);
+    if (kIsWeb) {
+      _videoController.setVolume(0);
+    }
 
     setState(() {
       _videoController.addListener(_onVideoEnded);
